@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flowing Heart</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+ctx.fillStyle = "#ffb6c1";
+ctx.font = "10px Arial", 6, "bold";
+ctx.textAlign = "center";
+
+let scale = 11;
+let i = 0;
+
+function draw() {
+    let angle = i * (Math.PI * 2) / 120;
+
+    let x = 16 * Math.pow(Math.sin(angle), 3) * scale;
+    let y = (13 * Math.cos(angle)
+            - 5 * Math.cos(2 * angle)
+            - 2 * Math.cos(3 * angle)
+            - Math.cos(4 * angle)) * scale;
+
+    let centerX = canvas.width / 2;
+    let centerY = canvas.height / 2;
+
+    ctx.fillText("I love you", centerX + x, centerY - y);
+
+    i++;
+
+    // move through full circle
+    if (i >= 120) {
+        i = 0;
+        scale++;
+    }
+
+    // stop after full heart is drawn
+    if (scale <= 16) {
+        requestAnimationFrame(draw);
+    }
+}
+
+draw();
+</script>
+
+</body>
+</html>
